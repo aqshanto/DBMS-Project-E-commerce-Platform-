@@ -1,5 +1,4 @@
-# DBMS-Project-E-commerce-Platform
-<pre>
+```mermaid
 erDiagram
     USERS {
         string user_id PK
@@ -70,5 +69,3 @@ erDiagram
     ORDERS ||--|{ ORDER_DETAILS : "contains"
     BOOKS ||--o{ ORDER_DETAILS : "included_in"
     BOOKS ||--o{ BOOK_PRICE_LOG : "has"
-
-</pre>
