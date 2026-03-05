@@ -140,3 +140,10 @@ erDiagram
     BUILDS ||--|{ BUILD_ITEMS : "has"
     PRODUCTS ||--o{ BUILD_ITEMS : "included_in"
     PRODUCTS ||--o{ PRICE_HISTORY_LOG : "tracked_in"
+
+
+## ⚙️ How to Setup the Database
+1. Open your MySQL client (Workbench/CLI).
+2. Run the scripts in the `database/` folder in the following order:
+   - First, run `01_schema.sql` to create the database and tables.
+   - Second, run `02_dummy_data.sql` to populate the tables with initial hardware data.
