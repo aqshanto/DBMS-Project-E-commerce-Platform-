@@ -101,3 +101,51 @@ CREATE TABLE COOLERS (
         ON UPDATE CASCADE 
         ON DELETE CASCADE
 );
+
+-- 11. USERS Table (Customer and Admin)
+CREATE TABLE USERS (
+    user_id VARCHAR(30) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('Admin', 'Customer') DEFAULT 'Customer'
+);
+
+-- 12. BUILDS Table (User saved PC builds)
+CREATE TABLE BUILDS (
+    build_id VARCHAR(30) PRIMARY KEY,
+    user_id VARCHAR(30) NOT NULL,
+    build_name VARCHAR(100) NOT NULL,
+    total_price DECIMAL(10, 2) DEFAULT 0.00,
+    total_wattage DECIMAL(6, 2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES USERS(user_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
+
+-- 13. BUILD_ITEMS Table (Junction table to store items in a build)
+CREATE TABLE BUILD_ITEMS (
+    build_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    build_id VARCHAR(30) NOT NULL,
+    product_id VARCHAR(30) NOT NULL,
+    quantity INT DEFAULT 1,
+    FOREIGN KEY (build_id) REFERENCES BUILDS(build_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES PRODUCTS(product_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
+
+-- 14. PRICE_HISTORY_LOG Table (For Triggers)
+CREATE TABLE PRICE_HISTORY_LOG (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id VARCHAR(30) NOT NULL,
+    old_price DECIMAL(10, 2) NOT NULL,
+    new_price DECIMAL(10, 2) NOT NULL,
+    change_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES PRODUCTS(product_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
