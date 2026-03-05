@@ -83,6 +83,19 @@ erDiagram
         string form_factor
     }
 
+    STORAGE {
+        string product_id PK "Also FK to PRODUCTS"
+        string form_factor
+        string interface_type
+        int capacity_gb
+    }
+
+    COOLERS {
+        string product_id PK "Also FK to PRODUCTS"
+        string cooler_type
+        string supported_sockets
+    }
+
     BUILDS {
         string build_id PK
         string build_name
@@ -118,23 +131,8 @@ erDiagram
     PRODUCTS ||--o| GPUS : "is_a"
     PRODUCTS ||--o| CASINGS : "is_a"
     PRODUCTS ||--o| PSUS : "is_a"
-    
-    %% Build Details and Logs
-    BUILDS ||--|{ BUILD_ITEMS : "has"
-    PRODUCTS ||--o{ BUILD_ITEMS : "included_in"
-    PRODUCTS ||--o{ PRICE_HISTORY_LOG : "tracked_in"
-
-    %% Core Relationships
-    USERS ||--o{ BUILDS : "saves"
-    CATEGORIES ||--o{ PRODUCTS : "contains"
-    
-    %% Inheritance Relationships (1 to 0 or 1)
-    PRODUCTS ||--o| CPUS : "is_a"
-    PRODUCTS ||--o| MOTHERBOARDS : "is_a"
-    PRODUCTS ||--o| RAMS : "is_a"
-    PRODUCTS ||--o| GPUS : "is_a"
-    PRODUCTS ||--o| CASINGS : "is_a"
-    PRODUCTS ||--o| PSUS : "is_a"
+    PRODUCTS ||--o| STORAGE : "is_a"
+    PRODUCTS ||--o| COOLERS : "is_a"
     
     %% Build Details and Logs
     BUILDS ||--|{ BUILD_ITEMS : "has"
