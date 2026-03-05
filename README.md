@@ -5,20 +5,7 @@ erDiagram
         string name
         string email
         string password_hash
-        string phone
-        string address
         string role
-    }
-
-    AUTHORS {
-        string author_id PK
-        string name
-        string biography
-    }
-
-    PUBLISHERS {
-        string publisher_id PK
-        string name
     }
 
     CATEGORIES {
@@ -26,46 +13,94 @@ erDiagram
         string category_name
     }
 
-    BOOKS {
-        string book_id PK
-        string title
-        string isbn
+    PRODUCTS {
+        string product_id PK
+        string name
+        string brand
         float price
-        int quantity
-        string author_id FK
-        string publisher_id FK
+        int stock_quantity
         string category_id FK
     }
 
-    ORDERS {
-        string order_id PK
-        date order_date
-        float total_amount
-        string status
+    CPUS {
+        string product_id PK "Also FK to PRODUCTS"
+        string socket_type
+        int core_count
+        float tdp_watt
+        int passmark_score
+    }
+
+    MOTHERBOARDS {
+        string product_id PK "Also FK to PRODUCTS"
+        string socket_type
+        string form_factor
+        string supported_ram_type
+        int m2_slots
+    }
+
+    RAMS {
+        string product_id PK "Also FK to PRODUCTS"
+        string ram_type
+        int capacity_gb
+        int speed_mhz
+    }
+
+    GPUS {
+        string product_id PK "Also FK to PRODUCTS"
+        float length_mm
+        float tdp_watt
+        int passmark_score
+    }
+
+    CASINGS {
+        string product_id PK "Also FK to PRODUCTS"
+        string supported_form_factors
+        float max_gpu_length_mm
+    }
+
+    PSUS {
+        string product_id PK "Also FK to PRODUCTS"
+        float wattage
+        string form_factor
+    }
+
+    BUILDS {
+        string build_id PK
+        string build_name
+        float total_price
+        float total_wattage
+        date created_at
         string user_id FK
     }
 
-    ORDER_DETAILS {
-        string order_details_id PK
+    BUILD_ITEMS {
+        string build_item_id PK
+        string build_id FK
+        string product_id FK
         int quantity
-        float unit_price
-        string order_id FK
-        string book_id FK
     }
 
-    BOOK_PRICE_LOG {
+    PRICE_HISTORY_LOG {
         string log_id PK
         float old_price
         float new_price
         date change_date
-        string book_id FK
+        string product_id FK
     }
 
-    %% Relationships and Cardinality
-    USERS ||--o{ ORDERS : "places"
-    AUTHORS ||--o{ BOOKS : "writes"
-    PUBLISHERS ||--o{ BOOKS : "publishes"
-    CATEGORIES ||--o{ BOOKS : "have"
-    ORDERS ||--|{ ORDER_DETAILS : "contains"
-    BOOKS ||--o{ ORDER_DETAILS : "included_in"
-    BOOKS ||--o{ BOOK_PRICE_LOG : "has"
+    %% Core Relationships
+    USERS ||--o{ BUILDS : "saves"
+    CATEGORIES ||--o{ PRODUCTS : "contains"
+    
+    %% Inheritance Relationships (1 to 0 or 1)
+    PRODUCTS ||--o| CPUS : "is_a"
+    PRODUCTS ||--o| MOTHERBOARDS : "is_a"
+    PRODUCTS ||--o| RAMS : "is_a"
+    PRODUCTS ||--o| GPUS : "is_a"
+    PRODUCTS ||--o| CASINGS : "is_a"
+    PRODUCTS ||--o| PSUS : "is_a"
+    
+    %% Build Details and Logs
+    BUILDS ||--|{ BUILD_ITEMS : "has"
+    PRODUCTS ||--o{ BUILD_ITEMS : "included_in"
+    PRODUCTS ||--o{ PRICE_HISTORY_LOG : "tracked_in"
