@@ -19,7 +19,7 @@ CREATE TABLE PRODUCTS (
         ON DELETE SET NULL
 );
 
---Note: ON DELETE SET NULL deya hoyeche jate kono category delete hoye geleo product ta database theke harie na jay, shudhu category faka hoye jay.
+-- Note: ON DELETE SET NULL deya hoyeche jate kono category delete hoye geleo product ta database theke harie na jay, shudhu category faka hoye jay.
 
 CREATE TABLE CPUS (
     product_id VARCHAR(30) PRIMARY KEY,
@@ -32,7 +32,7 @@ CREATE TABLE CPUS (
         ON DELETE CASCADE
 );
 
---Logic Check: Ekhane ON DELETE CASCADE bebohar kora hoyeche. Er mane holo, admin jodi PRODUCTS table theke kono CPU delete kore dey, tahole ei CPUS table thekeo automatically shei row ta delete hoye jabe. Eta data redundancy ebang orphan data thekate khub kaje dey.
+-- Logic Check: Ekhane ON DELETE CASCADE bebohar kora hoyeche. Er mane holo, admin jodi PRODUCTS table theke kono CPU delete kore dey, tahole ei CPUS table thekeo automatically shei row ta delete hoye jabe. Eta data redundancy ebang orphan data thekate khub kaje dey.
 
 CREATE TABLE MOTHERBOARDS (
     product_id VARCHAR(30) PRIMARY KEY,
