@@ -16,7 +16,7 @@ To handle the unique attributes of different PC components efficiently, we utili
 
 Instead of a single table with many `NULL` values, common attributes (Name, Price, Brand) are stored in the core `PRODUCTS` table. Specific attributes (like `socket_type` for CPUs or `wattage` for PSUs) are stored in specialized sub-tables. 
 
-### Entity-Relationship (ER) Diagram
+### Schema (ER) Diagram
 ```mermaid
 erDiagram
     USERS {
